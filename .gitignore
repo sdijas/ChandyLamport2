@@ -31,3 +31,5 @@ javadoc/
 cwallet.sso.lck
 .idea
 chandy-lamport-snapshot.iml
+report/*
+!report/document.pdf
