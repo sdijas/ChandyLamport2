@@ -1,6 +1,8 @@
 package edu.sharif.ce.snapshot.core.model.dao;
 
 
+import edu.sharif.ce.snapshot.core.model.entity.Bank;
+
 /**
  * The interface Bank data access object.
  *
@@ -10,14 +12,14 @@ public interface BankDao {
   /**
    * Deposit.
    *
-   * @param amount the amount
+   * @param bank the bank
    */
-  public void deposit(double amount);
+  public void deposit(Bank bank);
 
   /**
    * Withdraw.
    *
-   * @param amount the amount
+   * @param bank the bank
    */
-  public void withdraw(double amount);
+  public void withdraw(Bank bank);
 }
