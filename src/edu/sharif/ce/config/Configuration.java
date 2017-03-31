@@ -12,10 +12,14 @@ public final class Configuration {
   private static Properties properties;
   private static final String CONFIGURATION_FILE = "config.properties";
 
+
   /**
-   * The initial credit of bank.
+   * The constant INITIAL_BANK_CREDIT.
    */
   public static final Setting<Integer> INITIAL_BANK_CREDIT = () -> Integer.parseInt(properties.getProperty("InitialBankCredit"));
+  /**
+   * The constant NUMBER_OF_BANKS.
+   */
   public static final Setting<Integer> NUMBER_OF_BANKS = () -> Integer.parseInt(properties.getProperty("NumberOfBanks"));
 
 

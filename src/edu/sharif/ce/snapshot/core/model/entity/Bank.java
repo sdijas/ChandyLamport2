@@ -14,8 +14,15 @@ public class Bank {
   // The identifier bank account
   private int id;
 
-  public Bank(int id) {
+  /**
+   * Instantiates a new Bank.
+   *
+   * @param id      the id
+   * @param balance the balance
+   */
+  public Bank(int id, int balance) {
     this.id = id;
+    this.balance = balance;
   }
 
   /**

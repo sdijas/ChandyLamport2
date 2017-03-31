@@ -16,7 +16,7 @@ public class BankDaoImpl implements BankDao {
   /**
    * The Banks.
    */
-  List<Bank> banks;
+  private List<Bank> banks;
 
   /**
    * Instantiates a new Bank dao.
@@ -24,7 +24,7 @@ public class BankDaoImpl implements BankDao {
   public BankDaoImpl() {
     banks = new ArrayList<>(Configuration.NUMBER_OF_BANKS.get());
     for (int i = 0; i < banks.size(); i++)
-      banks.add(new Bank(i));
+      banks.add(new Bank(i, Configuration.INITIAL_BANK_CREDIT.get()));
   }
 
   @Override
