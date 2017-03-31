@@ -16,6 +16,7 @@ public final class Configuration {
    * The initial credit of bank.
    */
   public static final Setting<Integer> INITIAL_BANK_CREDIT = () -> Integer.parseInt(properties.getProperty("InitialBankCredit"));
+  public static final Setting<Integer> NUMBER_OF_BANKS = () -> Integer.parseInt(properties.getProperty("NumberOfBanks"));
 
 
   /**

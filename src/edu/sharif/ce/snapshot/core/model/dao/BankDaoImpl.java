@@ -4,6 +4,7 @@ package edu.sharif.ce.snapshot.core.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.sharif.ce.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 
 /**
@@ -15,7 +16,16 @@ public class BankDaoImpl implements BankDao {
   /**
    * The Banks.
    */
-  List<Bank> banks = new ArrayList<>();
+  List<Bank> banks;
+
+  /**
+   * Instantiates a new Bank dao.
+   */
+  public BankDaoImpl() {
+    banks = new ArrayList<>(Configuration.NUMBER_OF_BANKS.get());
+    for (int i = 0; i < banks.size(); i++)
+      banks.add(new Bank(i));
+  }
 
   @Override
   public void deposit(Bank bank) {

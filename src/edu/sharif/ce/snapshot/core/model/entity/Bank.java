@@ -14,6 +14,9 @@ public class Bank {
   // The identifier bank account
   private int id;
 
+  public Bank(int id) {
+    this.id = id;
+  }
 
   /**
    * Sets balance.
