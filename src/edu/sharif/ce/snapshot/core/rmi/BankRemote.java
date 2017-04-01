@@ -7,7 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 
 /**
- * Provides an access to remote Bank via remote method invocation.
+ * Provides an access to remote bank via remote method invocation.
  *
  * @author Alireza Aghamohammadi
  * @see Bank
