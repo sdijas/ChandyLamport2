@@ -7,12 +7,21 @@ import java.rmi.RemoteException;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 
 /**
- * The interface Withdraw.
+ * The interface RMIInterface.
  *
  * @author Alireza Aghamohammadi
  */
-@FunctionalInterface
-public interface Withdraw extends Remote {
+public interface RMIInterface extends Remote {
+  /**
+   * RMIInterface.
+   *
+   * @param senderId the sender id
+   * @param bank     the bank
+   * @return the true if deposit success otherwise return false
+   * @throws RemoteException the remote exception
+   */
+  boolean deposit(int senderId, Bank bank) throws RemoteException;
+
   /**
    * Withdraw.
    *

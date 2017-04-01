@@ -15,18 +15,18 @@ import edu.sharif.ce.snapshot.core.model.entity.Bank;
  * @author Alireza Aghamohammadi
  * @see Bank
  */
-public class BankRemote extends UnicastRemoteObject implements Deposit, Withdraw {
+public class BankServerRemote extends UnicastRemoteObject implements RMIInterface {
   private BankDaoImpl bankDao;
   private final Lock depositLock = new ReentrantLock();
   private final Lock withdrawLock = new ReentrantLock();
 
   /**
-   * Instantiates a new Bank remote.
+   * Instantiates a new Bank server remote.
    *
    * @param bankDao the bank dao
    * @throws RemoteException the remote exception
    */
-  public BankRemote(BankDaoImpl bankDao) throws RemoteException {
+  public BankServerRemote(BankDaoImpl bankDao) throws RemoteException {
     this.bankDao = bankDao;
   }
 

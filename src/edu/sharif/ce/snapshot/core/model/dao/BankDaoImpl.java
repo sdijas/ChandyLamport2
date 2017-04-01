@@ -1,11 +1,16 @@
 package edu.sharif.ce.snapshot.core.model.dao;
 
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
+import edu.sharif.ce.snapshot.core.rmi.RMIInterface;
 
 /**
  * The Bank data access object class.
@@ -46,5 +51,10 @@ public class BankDaoImpl implements BankDao {
   @Override
   public Bank getBank(int id) {
     return banks.get(id);
+  }
+
+  @Override
+  public RMIInterface getRemoteBank(Bank bank) throws RemoteException, NotBoundException, MalformedURLException {
+    return (RMIInterface) Naming.lookup("rmi://" + bank.getId());
   }
 }
