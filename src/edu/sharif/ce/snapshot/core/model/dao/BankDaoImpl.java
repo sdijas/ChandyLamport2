@@ -34,8 +34,17 @@ public class BankDaoImpl implements BankDao {
   }
 
   @Override
-  public void withdraw(Bank bank) {
+  public boolean withdraw(Bank bank) {
     Bank that = banks.get(bank.getId());
-    that.setBalance(that.getBalance() - bank.getBalance());
+    if (that.getBalance() >= bank.getBalance()) {
+      that.setBalance(that.getBalance() - bank.getBalance());
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public Bank getBank(int id) {
+    return banks.get(id);
   }
 }

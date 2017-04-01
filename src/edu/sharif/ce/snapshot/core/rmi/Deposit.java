@@ -16,9 +16,10 @@ public interface Deposit extends Remote {
   /**
    * Deposit.
    *
-   * @param bank the bank
-   * @return the true if operation success otherwise return false
+   * @param senderId the sender id
+   * @param bank     the bank
+   * @return the true if deposit success otherwise return false
    * @throws RemoteException the remote exception
    */
-  boolean deposit(Bank bank) throws RemoteException;
+  boolean deposit(int senderId, Bank bank) throws RemoteException;
 }

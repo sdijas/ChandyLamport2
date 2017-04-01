@@ -20,6 +20,15 @@ public interface BankDao {
    * Withdraw.
    *
    * @param bank the bank
+   * @return the true if balance of bank greater than amount of withdraw otherwise return false
    */
-  public void withdraw(Bank bank);
+  public boolean withdraw(Bank bank);
+
+  /**
+   * Gets bank.
+   *
+   * @param id the id
+   * @return the bank with expected id
+   */
+  public Bank getBank(int id);
 }
