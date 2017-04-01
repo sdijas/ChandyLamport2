@@ -16,11 +16,11 @@ public final class Configuration {
   /**
    * The constant INITIAL_BANK_CREDIT.
    */
-  public static final Setting<Integer> INITIAL_BANK_CREDIT = () -> Integer.parseInt(properties.getProperty("InitialBankCredit"));
+  public static final Setting<Integer> INITIAL_BANK_CREDIT = () -> Integer.parseInt(properties.getProperty("initialBankCredit"));
   /**
    * The constant NUMBER_OF_BANKS.
    */
-  public static final Setting<Integer> NUMBER_OF_BANKS = () -> Integer.parseInt(properties.getProperty("NumberOfBanks"));
+  public static final Setting<Integer> NUMBER_OF_BANKS = () -> Integer.parseInt(properties.getProperty("numberOfBanks"));
 
 
   /**
