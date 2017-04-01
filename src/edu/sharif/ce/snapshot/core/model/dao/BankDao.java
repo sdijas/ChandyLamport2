@@ -15,7 +15,7 @@ import edu.sharif.ce.snapshot.core.rmi.RMIInterface;
  */
 public interface BankDao {
   /**
-   * RMIInterface.
+   * Deposit.
    *
    * @param bank the bank
    */

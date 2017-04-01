@@ -12,12 +12,13 @@ import edu.sharif.ce.snapshot.core.model.entity.Bank;
  * @author Alireza Aghamohammadi
  */
 public interface RMIInterface extends Remote {
+
   /**
-   * RMIInterface.
+   * Deposit boolean.
    *
    * @param senderId the sender id
    * @param bank     the bank
-   * @return the true if deposit success otherwise return false
+   * @return the boolean
    * @throws RemoteException the remote exception
    */
   boolean deposit(int senderId, Bank bank) throws RemoteException;
