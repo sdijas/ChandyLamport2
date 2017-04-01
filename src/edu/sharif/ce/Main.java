@@ -1,6 +1,6 @@
 package edu.sharif.ce;
 
-import edu.sharif.ce.config.Configuration;
+import edu.sharif.ce.snapshot.config.Configuration;
 
 
 public class Main {

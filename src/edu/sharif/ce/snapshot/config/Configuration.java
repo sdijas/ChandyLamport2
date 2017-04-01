@@ -1,4 +1,4 @@
-package edu.sharif.ce.config;
+package edu.sharif.ce.snapshot.config;
 
 import java.io.IOException;
 import java.util.Properties;

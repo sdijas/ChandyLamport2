@@ -4,7 +4,7 @@ package edu.sharif.ce.snapshot.core.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.sharif.ce.config.Configuration;
+import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 
 /**
