@@ -54,6 +54,11 @@ public class BankDaoImpl implements BankDao {
   }
 
   @Override
+  public List<Bank> allBanks() {
+    return banks;
+  }
+
+  @Override
   public RMIInterface getRemoteBank(Bank bank) throws RemoteException, NotBoundException, MalformedURLException {
     return (RMIInterface) Naming.lookup("rmi://" + bank.getId());
   }

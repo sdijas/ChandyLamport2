@@ -4,6 +4,7 @@ package edu.sharif.ce.snapshot.core.model.dao;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 import edu.sharif.ce.snapshot.core.rmi.RMIInterface;
@@ -36,6 +37,8 @@ public interface BankDao {
    * @return the bank with expected id
    */
   public Bank getBank(int id);
+
+  public List<Bank> allBanks();
 
 
   /**

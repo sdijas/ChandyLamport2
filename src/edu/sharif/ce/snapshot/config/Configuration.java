@@ -22,6 +22,8 @@ public final class Configuration {
    */
   public static final Setting<Integer> NUMBER_OF_BANKS = () -> Integer.parseInt(properties.getProperty("numberOfBanks"));
 
+  public static final Setting<Integer> RMI_PORT = () -> Integer.parseInt(properties.getProperty("rmiPort"));
+
 
   /**
    * make sure there is no instance of this class can create
