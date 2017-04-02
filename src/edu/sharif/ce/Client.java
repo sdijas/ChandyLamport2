@@ -15,7 +15,7 @@ public class Client {
     Registry r = LocateRegistry.getRegistry(Configuration.RMI_PORT.get());
 
     RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer0");
-    bankServerRemote.transferMoney(1, new Bank(2, 500));
+    bankServerRemote.sendMoney(1, new Bank(2, 500));
     List<Bank> banks = bankServerRemote.getBankDao().allBanks();
     banks.forEach(System.err::println);
   }

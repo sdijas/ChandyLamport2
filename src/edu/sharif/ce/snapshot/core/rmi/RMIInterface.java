@@ -16,24 +16,24 @@ public interface RMIInterface extends Remote {
 
 
   /**
-   * Take money boolean.
+   * Receive money.
    *
    * @param senderId the sender id
    * @param bank     the bank
    * @return the boolean
    * @throws RemoteException the remote exception
    */
-  boolean takeMoney(int senderId, Bank bank) throws RemoteException;
+  boolean receiveMoney(int senderId, Bank bank) throws RemoteException;
 
 
   /**
-   * Transfer money.
+   * Send money.
    *
    * @param recipientId the recipient id
    * @param bank        the bank
    * @throws RemoteException the remote exception
    */
-  void transferMoney(int recipientId, Bank bank) throws RemoteException;
+  void sendMoney(int recipientId, Bank bank) throws RemoteException;
 
   /**
    * Gets bank dao.

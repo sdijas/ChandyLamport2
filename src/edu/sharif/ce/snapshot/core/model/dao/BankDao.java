@@ -23,7 +23,7 @@ public interface BankDao {
    * Withdraw.
    *
    * @param bank the bank
-   * @return the true if balance of bank greater than amount of transferMoney otherwise return false
+   * @return the true if balance of bank greater than amount of sendMoney otherwise return false
    */
   public boolean withdraw(Bank bank);
 

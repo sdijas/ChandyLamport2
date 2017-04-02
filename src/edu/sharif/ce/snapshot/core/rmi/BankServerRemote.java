@@ -31,17 +31,17 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
   }
 
   @Override
-  public void transferMoney(int recipientId, Bank bank) throws RemoteException {
+  public void sendMoney(int recipientId, Bank bank) throws RemoteException {
     withdrawLock.lock();
     try {
       boolean isWithdraw = bankDao.withdraw(bank);
       if (isWithdraw) {
-        System.err.println("transferMoney starting: " + bank.getBalance() + " to recipient=" + recipientId);
-        boolean isTransferred = bankDao.getRemoteBank(bank).takeMoney(bank.getId(), new Bank(recipientId, bank.getBalance()));
+        System.err.println("sendMoney starting: " + bank.getBalance() + " to recipient=" + recipientId);
+        boolean isTransferred = bankDao.getRemoteBank(bank).receiveMoney(bank.getId(), new Bank(recipientId, bank.getBalance()));
         if (isTransferred)
-          System.err.println("transferMoney finished, new balance=" + bankDao.getBank(bank.getId()).getBalance());
+          System.err.println("sendMoney finished, new balance=" + bankDao.getBank(bank.getId()).getBalance());
       } else {
-        System.err.println("transferMoney money: " + bank.getBalance() + " failed.");
+        System.err.println("sendMoney money: " + bank.getBalance() + " failed.");
       }
     } finally {
       withdrawLock.unlock();
@@ -49,12 +49,12 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
   }
 
   @Override
-  public boolean takeMoney(int senderId, Bank bank) throws RemoteException {
+  public boolean receiveMoney(int senderId, Bank bank) throws RemoteException {
     depositLock.lock();
     try {
-      System.err.println("deposit starting: " + bank.getBalance() + " from sender=" + senderId);
+      System.err.println("receiveMoney starting: " + bank.getBalance() + " from sender=" + senderId);
       bankDao.deposit(bank);
-      System.err.println("deposit finished, new balance=" + bankDao.getBank(bank.getId()).getBalance());
+      System.err.println("receiveMoney finished, new balance=" + bankDao.getBank(bank.getId()).getBalance());
       return true;
     } finally {
       depositLock.unlock();
