@@ -2,10 +2,11 @@ package edu.sharif.ce.snapshot.core.model.dao;
 
 
 import java.io.Serializable;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.sharif.ce.Client;
 import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 import edu.sharif.ce.snapshot.core.rmi.RMIInterface;
@@ -59,7 +60,8 @@ public class BankDaoImpl implements BankDao, Serializable {
   @Override
   public RMIInterface getRemoteBank(Bank bank) {
     try {
-      return (RMIInterface) Client.r.lookup("localhost/BankServer" + bank.getId());
+      Registry r = LocateRegistry.getRegistry(Configuration.RMI_PORT.get());
+      return (RMIInterface) r.lookup("localhost/BankServer" + bank.getId());
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println("Failed to ger remote interface for bank:" + bank.getId());
