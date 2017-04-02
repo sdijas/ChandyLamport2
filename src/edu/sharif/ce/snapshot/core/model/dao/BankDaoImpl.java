@@ -28,7 +28,7 @@ public class BankDaoImpl implements BankDao {
    */
   public BankDaoImpl() {
     banks = new ArrayList<>(Configuration.NUMBER_OF_BANKS.get());
-    for (int i = 0; i < banks.size(); i++)
+    for (int i = 0; i < Configuration.NUMBER_OF_BANKS.get(); i++)
       banks.add(new Bank(i, Configuration.INITIAL_BANK_CREDIT.get()));
   }
 

@@ -1,10 +1,9 @@
 package edu.sharif.ce;
 
-import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.dao.BankDaoImpl;
@@ -15,26 +14,32 @@ import edu.sharif.ce.snapshot.core.rmi.BankServerRemote;
  * The launcher of application
  */
 public class Main {
+  private static Registry r;
+
+
   /**
    * The entry point of application.
    *
    * @param args the input arguments
    * @throws RemoteException       the remote exception
    * @throws AlreadyBoundException the already bound exception
-   * @throws MalformedURLException the malformed url exception
    */
-  public static void main(String[] args) throws RemoteException, AlreadyBoundException, MalformedURLException {
+  public static void main(String[] args) throws RemoteException, AlreadyBoundException {
     startRMIRegistry();
     bind();
   }
 
   private static void startRMIRegistry() throws RemoteException {
-    LocateRegistry.createRegistry(Configuration.RMI_PORT.get());
+    r = LocateRegistry.createRegistry(Configuration.RMI_PORT.get());
   }
 
-  private static void bind() throws RemoteException, AlreadyBoundException, MalformedURLException {
+
+  private static void bind() throws AlreadyBoundException, RemoteException {
+    System.setProperty("java.rmi.server.hostname", "localhost");
     BankDaoImpl bankDao = new BankDaoImpl();
-    for (Bank bank : bankDao.allBanks())
-      Naming.bind("rmi://" + bank.getId(), new BankServerRemote(bankDao));
+    BankServerRemote bankServerRemote = new BankServerRemote(bankDao);
+    for (Bank bank : bankDao.allBanks()) {
+      r.bind("localhost/BankServer" + bank.getId(), bankServerRemote);
+    }
   }
 }

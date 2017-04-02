@@ -38,6 +38,11 @@ public interface BankDao {
    */
   public Bank getBank(int id);
 
+  /**
+   * All banks list.
+   *
+   * @return the list
+   */
   public List<Bank> allBanks();
 
 
