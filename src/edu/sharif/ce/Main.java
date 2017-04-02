@@ -31,6 +31,7 @@ public class Main {
 
   private static void startRMIRegistry() throws RemoteException {
     r = LocateRegistry.createRegistry(Configuration.RMI_PORT.get());
+    System.err.println("Server Bank is ready...");
   }
 
 
