@@ -31,14 +31,17 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
   }
 
   @Override
-  public void withdraw(Bank bank) throws RemoteException {
+  public void transferMoney(int recipientId, Bank bank) throws RemoteException {
     withdrawLock.lock();
     try {
       boolean isWithdraw = bankDao.withdraw(bank);
       if (isWithdraw) {
-        //TODO
+        System.err.println("transferMoney starting: " + bank.getBalance() + " to recipient=" + recipientId);
+        boolean isTransferred = bankDao.getRemoteBank(bank).takeMoney(bank.getId(), new Bank(recipientId, bank.getBalance()));
+        if (isTransferred)
+          System.err.println("transferMoney finished, new balance=" + bankDao.getBank(bank.getId()).getBalance());
       } else {
-        System.err.println("withdraw money: " + bank.getBalance() + " failed.");
+        System.err.println("transferMoney money: " + bank.getBalance() + " failed.");
       }
     } finally {
       withdrawLock.unlock();
@@ -46,7 +49,7 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
   }
 
   @Override
-  public boolean deposit(int senderId, Bank bank) throws RemoteException {
+  public boolean takeMoney(int senderId, Bank bank) throws RemoteException {
     depositLock.lock();
     try {
       System.err.println("deposit starting: " + bank.getBalance() + " from sender=" + senderId);
@@ -56,5 +59,10 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
     } finally {
       depositLock.unlock();
     }
+  }
+
+  @Override
+  public BankDaoImpl getBankDao() throws RemoteException {
+    return bankDao;
   }
 }

@@ -4,6 +4,7 @@ package edu.sharif.ce.snapshot.core.rmi;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import edu.sharif.ce.snapshot.core.model.dao.BankDaoImpl;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 
 /**
@@ -13,21 +14,32 @@ import edu.sharif.ce.snapshot.core.model.entity.Bank;
  */
 public interface RMIInterface extends Remote {
 
+
   /**
-   * Deposit boolean.
+   * Take money boolean.
    *
    * @param senderId the sender id
    * @param bank     the bank
    * @return the boolean
    * @throws RemoteException the remote exception
    */
-  boolean deposit(int senderId, Bank bank) throws RemoteException;
+  boolean takeMoney(int senderId, Bank bank) throws RemoteException;
+
 
   /**
-   * Withdraw.
+   * Transfer money.
    *
-   * @param bank the bank
+   * @param recipientId the recipient id
+   * @param bank        the bank
    * @throws RemoteException the remote exception
    */
-  void withdraw(Bank bank) throws RemoteException;
+  void transferMoney(int recipientId, Bank bank) throws RemoteException;
+
+  /**
+   * Gets bank dao.
+   *
+   * @return the bank dao
+   * @throws RemoteException the remote exception
+   */
+  public BankDaoImpl getBankDao() throws RemoteException;
 }

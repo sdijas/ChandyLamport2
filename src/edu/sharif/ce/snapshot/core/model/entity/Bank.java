@@ -1,12 +1,16 @@
 package edu.sharif.ce.snapshot.core.model.entity;
 
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  * The Bank Model.
  *
  * @author Alireza Aghamohammadi
  */
-public class Bank {
+public class Bank implements Serializable {
+
 
   // The amount of money held in a bank account at a given moment
   private int balance;
@@ -52,5 +56,8 @@ public class Bank {
     return id;
   }
 
-
+  @Override
+  public String toString() {
+    return "Bank[Id(" + getId() + "),Balance(" + getBalance() + ")]";
+  }
 }
