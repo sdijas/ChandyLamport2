@@ -37,4 +37,8 @@ public class RandomGenerator {
   public static int generateRandomBankId() {
     return new Random().nextInt(Configuration.NUMBER_OF_BANKS.get());
   }
+
+  public static boolean hasChance() {
+    return (new Random().nextDouble() < Configuration.CHANCE.get());
+  }
 }

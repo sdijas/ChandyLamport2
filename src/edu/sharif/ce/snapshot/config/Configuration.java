@@ -1,6 +1,7 @@
 package edu.sharif.ce.snapshot.config;
 
 import java.io.IOException;
+import java.util.DoubleSummaryStatistics;
 import java.util.Properties;
 
 /**
@@ -51,6 +52,11 @@ public final class Configuration {
    * The constant MAXIMUM_QUEUEING_DELAY.
    */
   public static final Setting<Integer> MAXIMUM_QUEUEING_DELAY = () -> Integer.parseInt(properties.getProperty("maximumQueueingDelay"));
+
+  /**
+   * The constant CHANCE.
+   */
+  public static final Setting<Double> CHANCE = () -> Double.parseDouble(properties.getProperty("chance"));
 
   /**
    * make sure there is no instance of this class can create

@@ -8,6 +8,7 @@ import java.rmi.registry.Registry;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
@@ -34,19 +35,23 @@ public class Client {
     // Thread pool to transfer money
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
-
+    // each bank send random money to other banks
     executorService.scheduleAtFixedRate(() -> {
-      try {
-        int randomBankId = RandomGenerator.generateRandomBankId();
-        RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer" + randomBankId);
-        bankServerRemote.sendMoney(RandomGenerator.generateRandomBankId(), new Bank(randomBankId, RandomGenerator.generateRandomAmount()));
-        for (Bank b : bankServerRemote.getBankDao().allBanks())
-          System.err.println(b);
-      } catch (RemoteException e) {
-        System.err.println("Failed to transfer money to random banks");
-      } catch (NotBoundException e) {
-        System.err.println("Couldn't find remote bank");
-      }
+      IntStream.range(0, Configuration.NUMBER_OF_BANKS.get())
+        .parallel()
+        .forEach(i ->
+          IntStream.range(0, Configuration.NUMBER_OF_BANKS.get())
+            .forEach(j -> {
+              try {
+                RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer" + i);
+                if (RandomGenerator.hasChance())
+                  bankServerRemote.sendMoney(j, new Bank(i, RandomGenerator.generateRandomAmount()));
+              } catch (RemoteException e) {
+                System.err.println("Failed to transfer money to random banks");
+              } catch (NotBoundException e) {
+                System.err.println("Couldn't find remote bank");
+              }
+            }));
     }, 0, Configuration.TIMEOUT_PERIOD.get(), TimeUnit.MILLISECONDS);
 
   }
