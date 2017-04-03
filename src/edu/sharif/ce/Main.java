@@ -16,6 +16,7 @@ import edu.sharif.ce.snapshot.core.rmi.BankServerRemote;
 public class Main {
   private static Registry r;
 
+
   /**
    * The entry point of application.
    *

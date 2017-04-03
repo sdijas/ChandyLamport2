@@ -33,7 +33,7 @@ public interface RMIInterface extends Remote {
    * @param bank        the bank
    * @throws RemoteException the remote exception
    */
-  void sendMoney(int recipientId, Bank bank) throws RemoteException;
+  void sendMoney(int recipientId, Bank bank,int time) throws RemoteException;
 
   /**
    * Gets bank dao.

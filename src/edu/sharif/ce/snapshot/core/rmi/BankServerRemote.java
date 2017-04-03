@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.dao.BankDaoImpl;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 import edu.sharif.ce.snapshot.util.RandomGenerator;
@@ -32,20 +33,23 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
   }
 
   @Override
-  public void sendMoney(int recipientId, Bank bank) throws RemoteException {
+  public void sendMoney(int recipientId, Bank bank, int time) throws RemoteException {
     withdrawLock.lock();
     try {
       boolean isWithdraw = bankDao.withdraw(bank);
       if (isWithdraw) {
-        System.err.println("sendMoney starting: " + bank.getBalance() + " to recipient=" + recipientId);
+        String report = "-\t" + time + "\t" + bank.getBalance() + "\t-\t";
+        int delay = RandomGenerator.generateQueueingDelay();
         try {
-          Thread.sleep(RandomGenerator.generateQueueingDelay());
+          Thread.sleep(delay);
         } catch (InterruptedException e) {
           System.err.println("failed to transfer money");
         }
         boolean isTransferred = bankDao.getRemoteBank(bank).receiveMoney(bank.getId(), new Bank(recipientId, bank.getBalance()));
-        if (isTransferred)
-          System.err.println("sendMoney finished, new balance=" + bankDao.getBank(bank.getId()).getBalance());
+        if (isTransferred) {
+          report = report + (time + delay / Configuration.TIMEOUT_PERIOD.get());
+          System.err.println(report);
+        }
       } else {
         System.err.println("sendMoney money: " + bank.getBalance() + " failed.");
       }
@@ -58,9 +62,7 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
   public boolean receiveMoney(int senderId, Bank bank) throws RemoteException {
     depositLock.lock();
     try {
-      System.err.println("receiveMoney starting: " + bank.getBalance() + " from sender=" + senderId);
       bankDao.deposit(bank);
-      System.err.println("receiveMoney finished, new balance=" + bankDao.getBank(bank.getId()).getBalance());
       return true;
     } finally {
       depositLock.unlock();

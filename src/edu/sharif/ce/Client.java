@@ -19,9 +19,6 @@ import edu.sharif.ce.snapshot.util.RandomGenerator;
  * The type Client.
  */
 public class Client {
-  /**
-   * The constant time.
-   */
   public static int time;
 
   /**
@@ -37,6 +34,7 @@ public class Client {
 
     // each bank send random money to other banks
     executorService.scheduleAtFixedRate(() -> {
+      time++;
       IntStream.range(0, Configuration.NUMBER_OF_BANKS.get())
         .parallel()
         .forEach(i ->
@@ -44,8 +42,9 @@ public class Client {
             .forEach(j -> {
               try {
                 RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer" + i);
-                if (RandomGenerator.hasChance())
-                  bankServerRemote.sendMoney(j, new Bank(i, RandomGenerator.generateRandomAmount()));
+                if (RandomGenerator.hasChance()) {
+                  bankServerRemote.sendMoney(j, new Bank(i, RandomGenerator.generateRandomAmount()), time);
+                }
               } catch (RemoteException e) {
                 System.err.println("Failed to transfer money to random banks");
               } catch (NotBoundException e) {
