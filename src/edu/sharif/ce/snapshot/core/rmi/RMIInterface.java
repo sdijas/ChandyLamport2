@@ -31,6 +31,7 @@ public interface RMIInterface extends Remote {
    *
    * @param recipientId the recipient id
    * @param bank        the bank
+   * @param time        the time
    * @throws RemoteException the remote exception
    */
   void sendMoney(int recipientId, Bank bank,int time) throws RemoteException;
