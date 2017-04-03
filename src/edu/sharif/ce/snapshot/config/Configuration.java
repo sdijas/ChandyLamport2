@@ -37,6 +37,11 @@ public final class Configuration {
    */
   public static final Setting<Integer> MAXIMUM_TRANSFER_AMOUNT = () -> Integer.parseInt(properties.getProperty("maximumTransferAmount"));
 
+  /**
+   * The constant TIMEOUT_PERIOD.
+   */
+  public static final Setting<Integer> TIMEOUT_PERIOD = () -> Integer.parseInt(properties.getProperty("timeoutPeriod"));
+
 
   /**
    * make sure there is no instance of this class can create
