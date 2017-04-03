@@ -1,6 +1,7 @@
 package edu.sharif.ce;
 
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -30,19 +31,21 @@ public class Client {
    */
   public static void main(String[] args) throws Exception {
     Registry r = LocateRegistry.getRegistry(Configuration.RMI_PORT.get());
-    RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer0");
-
     // Thread pool to transfer money
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
 
     executorService.scheduleAtFixedRate(() -> {
       try {
-        bankServerRemote.sendMoney(1, new Bank(2, RandomGenerator.generateRandomAmount()));
+        int randomBankId = RandomGenerator.generateRandomBankId();
+        RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer" + randomBankId);
+        bankServerRemote.sendMoney(RandomGenerator.generateRandomBankId(), new Bank(randomBankId, RandomGenerator.generateRandomAmount()));
         for (Bank b : bankServerRemote.getBankDao().allBanks())
           System.err.println(b);
       } catch (RemoteException e) {
-        e.printStackTrace();
+        System.err.println("Failed to transfer money to random banks");
+      } catch (NotBoundException e) {
+        System.err.println("Couldn't find remote bank");
       }
     }, 0, Configuration.TIMEOUT_PERIOD.get(), TimeUnit.MILLISECONDS);
 

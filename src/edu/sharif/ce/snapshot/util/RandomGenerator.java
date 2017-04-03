@@ -28,4 +28,13 @@ public class RandomGenerator {
   public static int generateQueueingDelay() {
     return (new Random().nextInt(Configuration.MAXIMUM_QUEUEING_DELAY.get()) + Configuration.MINIMUM_QUEUEING_DELAY.get()) * Configuration.TIMEOUT_PERIOD.get();
   }
+
+  /**
+   * Generate random bank id.
+   *
+   * @return the int
+   */
+  public static int generateRandomBankId() {
+    return new Random().nextInt(Configuration.NUMBER_OF_BANKS.get());
+  }
 }
