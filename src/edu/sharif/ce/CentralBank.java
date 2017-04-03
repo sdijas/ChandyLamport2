@@ -13,12 +13,12 @@ import edu.sharif.ce.snapshot.core.rmi.BankServerRemote;
 /**
  * The launcher of application
  */
-public class Main {
+public class CentralBank {
   private static Registry r;
 
 
   /**
-   * The entry point of application.
+   * The Central Bank.
    *
    * @param args the input arguments
    * @throws RemoteException       the remote exception

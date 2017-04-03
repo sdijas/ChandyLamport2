@@ -16,9 +16,12 @@ import edu.sharif.ce.snapshot.core.rmi.RMIInterface;
 import edu.sharif.ce.snapshot.util.RandomGenerator;
 
 /**
- * The type Client.
+ * The Banks.
  */
-public class Client {
+public class Banks {
+  /**
+   * The constant time.
+   */
   public static int time;
 
   /**
