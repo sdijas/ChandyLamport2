@@ -7,6 +7,7 @@ import java.io.Serializable;
  * The distributed Chandy/Lamport snapshot.
  *
  * @author Alireza Aghamohammadi
+ * @see Bank
  */
 public class Snapshot implements Serializable {
   // The identifier of bank account
