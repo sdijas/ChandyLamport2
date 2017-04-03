@@ -3,13 +3,12 @@ package edu.sharif.ce.snapshot.core.rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Random;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.dao.BankDaoImpl;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
+import edu.sharif.ce.snapshot.util.RandomGenerator;
 
 /**
  * Provides an access to remote bank via remote method invocation.
@@ -40,9 +39,9 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
       if (isWithdraw) {
         System.err.println("sendMoney starting: " + bank.getBalance() + " to recipient=" + recipientId);
         try {
-          Thread.sleep((new Random().nextInt(5) + 1) * Configuration.TIMEOUT_PERIOD.get());
+          Thread.sleep(RandomGenerator.generateQueueingDelay());
         } catch (InterruptedException e) {
-          e.printStackTrace();
+          System.err.println("failed to transfer money");
         }
         boolean isTransferred = bankDao.getRemoteBank(bank).receiveMoney(bank.getId(), new Bank(recipientId, bank.getBalance()));
         if (isTransferred)

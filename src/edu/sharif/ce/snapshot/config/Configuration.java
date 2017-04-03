@@ -42,6 +42,15 @@ public final class Configuration {
    */
   public static final Setting<Integer> TIMEOUT_PERIOD = () -> Integer.parseInt(properties.getProperty("timeoutPeriod"));
 
+  /**
+   * The constant MINIMUM_QUEUEING_DELAY.
+   */
+  public static final Setting<Integer> MINIMUM_QUEUEING_DELAY = () -> Integer.parseInt(properties.getProperty("minimumQueueingDelay"));
+
+  /**
+   * The constant MAXIMUM_QUEUEING_DELAY.
+   */
+  public static final Setting<Integer> MAXIMUM_QUEUEING_DELAY = () -> Integer.parseInt(properties.getProperty("maximumQueueingDelay"));
 
   /**
    * make sure there is no instance of this class can create
