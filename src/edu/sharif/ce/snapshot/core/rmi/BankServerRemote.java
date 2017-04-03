@@ -3,9 +3,11 @@ package edu.sharif.ce.snapshot.core.rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Random;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.dao.BankDaoImpl;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 
@@ -37,6 +39,11 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
       boolean isWithdraw = bankDao.withdraw(bank);
       if (isWithdraw) {
         System.err.println("sendMoney starting: " + bank.getBalance() + " to recipient=" + recipientId);
+        try {
+          Thread.sleep((new Random().nextInt(5) + 1) * Configuration.TIMEOUT_PERIOD.get());
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
         boolean isTransferred = bankDao.getRemoteBank(bank).receiveMoney(bank.getId(), new Bank(recipientId, bank.getBalance()));
         if (isTransferred)
           System.err.println("sendMoney finished, new balance=" + bankDao.getBank(bank.getId()).getBalance());
