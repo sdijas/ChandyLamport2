@@ -2,7 +2,6 @@ package edu.sharif.ce.snapshot.core.model.entity;
 
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * The Bank Model.
@@ -18,6 +17,9 @@ public class Bank implements Serializable {
   // The identifier bank account
   private int id;
 
+  // Each bank has a snapshot
+  private Snapshot snapshot;
+
   /**
    * Instantiates a new Bank.
    *
@@ -27,6 +29,7 @@ public class Bank implements Serializable {
   public Bank(int id, int balance) {
     this.id = id;
     this.balance = balance;
+    this.snapshot = new Snapshot();
   }
 
   /**
@@ -54,6 +57,15 @@ public class Bank implements Serializable {
    */
   public int getId() {
     return id;
+  }
+
+  /**
+   * Gets snapshot.
+   *
+   * @return the snapshot of bank
+   */
+  public Snapshot getSnapshot() {
+    return snapshot;
   }
 
   @Override
