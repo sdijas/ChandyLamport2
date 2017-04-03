@@ -22,7 +22,20 @@ public final class Configuration {
    */
   public static final Setting<Integer> NUMBER_OF_BANKS = () -> Integer.parseInt(properties.getProperty("numberOfBanks"));
 
+  /**
+   * The constant RMI_PORT.
+   */
   public static final Setting<Integer> RMI_PORT = () -> Integer.parseInt(properties.getProperty("rmiPort"));
+
+  /**
+   * The constant MINIMUM_TRANSFER_AMOUNT.
+   */
+  public static final Setting<Integer> MINIMUM_TRANSFER_AMOUNT = () -> Integer.parseInt(properties.getProperty("minimumTransferAmount"));
+
+  /**
+   * The constant MAXIMUM_TRANSFER_AMOUNT.
+   */
+  public static final Setting<Integer> MAXIMUM_TRANSFER_AMOUNT = () -> Integer.parseInt(properties.getProperty("maximumTransferAmount"));
 
 
   /**
