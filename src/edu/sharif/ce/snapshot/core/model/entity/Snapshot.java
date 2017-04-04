@@ -2,6 +2,10 @@ package edu.sharif.ce.snapshot.core.model.entity;
 
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * The distributed Chandy/Lamport snapshot.
@@ -10,14 +14,17 @@ import java.io.Serializable;
  * @see Bank
  */
 public class Snapshot implements Serializable {
-  // The identifier of bank account
+  // The identifier of bank account.
   private int id;
 
-  // The amount of money held in a bank account at a given moment
+  // The amount of money held in a bank account at a given moment.
   private int balance;
 
-  // The amount of money in transit
+  // The amount of money in transit.
   private int moneyInTransit;
+
+  // Each banks in the system records its local state and the state of its incoming channels.
+  private Set<Integer> incomingChannels = new HashSet<>();
 
   /**
    * Gets id.
@@ -44,5 +51,24 @@ public class Snapshot implements Serializable {
    */
   public int getMoneyInTransit() {
     return moneyInTransit;
+  }
+
+  /**
+   * Start snapshot.
+   *
+   * @param bankId  the bank id
+   * @param balance the balance
+   * @param banks   the banks
+   */
+  public void startSnapshot(int bankId, int balance, List<Bank> banks) {
+    this.balance = balance;
+    this.moneyInTransit = 0;
+    incomingChannels
+      .addAll(
+        banks
+          .parallelStream()
+          .filter(b -> b.getId() != bankId)
+          .map(b -> b.getId())
+          .collect(Collectors.toSet()));
   }
 }
