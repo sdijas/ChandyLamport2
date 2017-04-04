@@ -71,4 +71,13 @@ public class Snapshot implements Serializable {
           .map(Bank::getId)
           .collect(Collectors.toSet()));
   }
+
+  /**
+   * Stop snapshot.
+   */
+  public void stopSnapshot() {
+    this.balance = 0;
+    this.moneyInTransit = 0;
+    incomingChannels.clear();
+  }
 }
