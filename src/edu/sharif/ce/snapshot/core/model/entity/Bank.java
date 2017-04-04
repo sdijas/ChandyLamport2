@@ -70,6 +70,6 @@ public class Bank implements Serializable {
 
   @Override
   public String toString() {
-    return "Bank[Id(" + getId() + "),Balance(" + getBalance() + ")]";
+    return "Bank[Id(" + getId() + "), Balance(" + getBalance() + ")]";
   }
 }

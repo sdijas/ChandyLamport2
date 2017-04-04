@@ -109,4 +109,9 @@ public class Snapshot implements Serializable {
     if (incomingChannels.contains(recipientBankId))
       this.moneyInTransit += bank.getBalance();
   }
+
+  @Override
+  public String toString() {
+    return "Snapshot[Balance(" + getBalance() + "), MoneyInTransit(" + getMoneyInTransit() + ")]";
+  }
 }
