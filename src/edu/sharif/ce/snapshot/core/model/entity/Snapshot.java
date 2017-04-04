@@ -56,18 +56,18 @@ public class Snapshot implements Serializable {
   /**
    * Start snapshot.
    *
-   * @param bankId  the bank id
+   * @param bank    the bank
    * @param balance the balance
    * @param banks   the banks
    */
-  public void startSnapshot(int bankId, int balance, List<Bank> banks) {
+  public void startSnapshot(Bank bank, int balance, List<Bank> banks) {
     this.balance = balance;
     this.moneyInTransit = 0;
     incomingChannels
       .addAll(
         banks
           .parallelStream()
-          .filter(b -> b.getId() != bankId)
+          .filter(b -> b.getId() != bank.getId())
           .map(Bank::getId)
           .collect(Collectors.toSet()));
   }
@@ -79,5 +79,23 @@ public class Snapshot implements Serializable {
     this.balance = 0;
     this.moneyInTransit = 0;
     incomingChannels.clear();
+  }
+
+  /**
+   * Stop recording.
+   *
+   * @param bank the bank
+   */
+  public void stopRecording(Bank bank) {
+    incomingChannels.remove(bank.getId());
+  }
+
+  /**
+   * Is recording?
+   *
+   * @return the true if bank is recording snapshot otherwise return false
+   */
+  public boolean isRecording() {
+    return incomingChannels.size() != 0;
   }
 }
