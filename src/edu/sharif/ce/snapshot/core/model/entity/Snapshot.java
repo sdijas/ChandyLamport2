@@ -68,7 +68,7 @@ public class Snapshot implements Serializable {
         banks
           .parallelStream()
           .filter(b -> b.getId() != bankId)
-          .map(b -> b.getId())
+          .map(Bank::getId)
           .collect(Collectors.toSet()));
   }
 }
