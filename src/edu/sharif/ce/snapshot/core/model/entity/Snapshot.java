@@ -98,4 +98,15 @@ public class Snapshot implements Serializable {
   public boolean isRecording() {
     return incomingChannels.size() != 0;
   }
+
+  /**
+   * Increment money in transit.
+   *
+   * @param recipientBankId the recipient bank id
+   * @param bank            the bank
+   */
+  public void incrementMoneyInTransit(int recipientBankId, Bank bank) {
+    if (incomingChannels.contains(recipientBankId))
+      this.moneyInTransit += bank.getBalance();
+  }
 }
