@@ -5,6 +5,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +24,7 @@ public class Banks {
   /**
    * The constant time.
    */
-  public static int time;
+  private static int time;
 
   /**
    * The entry point of application.
@@ -39,7 +41,6 @@ public class Banks {
     executorService.scheduleAtFixedRate(() -> {
       time++;
       IntStream.range(0, Configuration.NUMBER_OF_BANKS.get())
-        .parallel()
         .forEach(i ->
           IntStream.range(0, Configuration.NUMBER_OF_BANKS.get())
             .forEach(j -> {
@@ -56,5 +57,18 @@ public class Banks {
             }));
     }, 0, Configuration.TIMEOUT_PERIOD.get(), TimeUnit.MILLISECONDS);
 
+    Scanner scanner = new Scanner(System.in);
+    scanner.next();
+    ExecutorService e = Executors.newFixedThreadPool(1);
+    e.execute(() -> {
+      try {
+        RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer0");
+        bankServerRemote.receiveToken(0, 0);
+      } catch (RemoteException e1) {
+        System.err.println("Failed to receive token from remote");
+      } catch (NotBoundException e1) {
+        System.err.println("Couldn't find remote bank");
+      }
+    });
   }
 }

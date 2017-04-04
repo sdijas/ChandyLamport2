@@ -14,9 +14,6 @@ import java.util.stream.Collectors;
  * @see Bank
  */
 public class Snapshot implements Serializable {
-  // The identifier of bank account.
-  private int id;
-
   // The amount of money held in a bank account at a given moment.
   private int balance;
 
@@ -27,20 +24,11 @@ public class Snapshot implements Serializable {
   private Set<Integer> incomingChannels = new HashSet<>();
 
   /**
-   * Gets id.
-   *
-   * @return the identifier of bank account
-   */
-  public int getId() {
-    return id;
-  }
-
-  /**
    * Gets balance.
    *
    * @return the balance
    */
-  public int getBalance() {
+  private int getBalance() {
     return balance;
   }
 
@@ -49,7 +37,7 @@ public class Snapshot implements Serializable {
    *
    * @return the the amount of money in transit.
    */
-  public int getMoneyInTransit() {
+  private int getMoneyInTransit() {
     return moneyInTransit;
   }
 
@@ -76,6 +64,7 @@ public class Snapshot implements Serializable {
    * Stop snapshot.
    */
   public void stopSnapshot() {
+    System.out.println(this);
     this.balance = 0;
     this.moneyInTransit = 0;
     incomingChannels.clear();
@@ -106,8 +95,10 @@ public class Snapshot implements Serializable {
    * @param bank            the bank
    */
   public void incrementMoneyInTransit(int recipientBankId, Bank bank) {
-    if (incomingChannels.contains(recipientBankId))
+    if (incomingChannels.contains(recipientBankId)) {
       this.moneyInTransit += bank.getBalance();
+    }
+
   }
 
   @Override

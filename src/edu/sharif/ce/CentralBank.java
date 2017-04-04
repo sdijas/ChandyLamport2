@@ -38,9 +38,8 @@ public class CentralBank {
   private static void bind() throws AlreadyBoundException, RemoteException {
     System.setProperty("java.rmi.server.hostname", "localhost");
     BankDaoImpl bankDao = new BankDaoImpl();
-    BankServerRemote bankServerRemote = new BankServerRemote(bankDao);
     for (Bank bank : bankDao.allBanks()) {
-      r.bind("localhost/BankServer" + bank.getId(), bankServerRemote);
+      r.bind("localhost/BankServer" + bank.getId(), new BankServerRemote(bankDao));
     }
   }
 }

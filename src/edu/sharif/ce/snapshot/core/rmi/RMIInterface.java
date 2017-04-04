@@ -34,7 +34,7 @@ public interface RMIInterface extends Remote {
    * @param time        the time
    * @throws RemoteException the remote exception
    */
-  void sendMoney(int recipientId, Bank bank,int time) throws RemoteException;
+  void sendMoney(int recipientId, Bank bank, int time) throws RemoteException;
 
   /**
    * Gets bank dao.
@@ -43,4 +43,14 @@ public interface RMIInterface extends Remote {
    * @throws RemoteException the remote exception
    */
   public BankDaoImpl getBankDao() throws RemoteException;
+
+  /**
+   * Receive token.
+   *
+   * @param receiverBankId the receiver bank id
+   * @param senderBankId   the sender bank id
+   * @throws RemoteException the remote exception
+   */
+  void receiveToken(int receiverBankId, int senderBankId) throws RemoteException;
+
 }
