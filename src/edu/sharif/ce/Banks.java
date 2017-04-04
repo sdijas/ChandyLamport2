@@ -45,7 +45,7 @@ public class Banks {
             .forEach(j -> {
               try {
                 RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer" + i);
-                if (RandomGenerator.hasChance()) {
+                if (RandomGenerator.hasChance() && j != i) {
                   bankServerRemote.sendMoney(j, new Bank(i, RandomGenerator.generateRandomAmount()), time);
                 }
               } catch (RemoteException e) {
