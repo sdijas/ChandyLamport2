@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
@@ -72,9 +73,15 @@ public class Banks {
           continue;
         case "snapshot":
           snapshot(commandParts);
+        case "exit":
+          readCommands = false;
+          break;
+        default:
+          System.err.println("Unrecognized command" + commandParts[0]);
 
       }
     }
+    input.close();
   }
 
   private static void snapshot(String[] args) {
@@ -92,6 +99,22 @@ public class Banks {
           System.err.println("Couldn't find remote bank");
         }
       });
+    }
+    if (args.length == 3) {
+      ScheduledThreadPoolExecutor e = new ScheduledThreadPoolExecutor(1);
+      e.schedule(() -> {
+        try {
+          Report.write("snapshot bank" + args[1] + " at time:" + args[2]);
+          int bankId = Integer.parseInt(args[1]);
+          RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer" + bankId);
+          bankServerRemote.receiveToken(bankId, bankId);
+          e.shutdown();
+        } catch (RemoteException e1) {
+          System.err.println("Failed to receive token from remote");
+        } catch (NotBoundException e1) {
+          System.err.println("Couldn't find remote bank");
+        }
+      }, Integer.parseInt(args[2]) * Configuration.TIMEOUT_PERIOD.get(), TimeUnit.MILLISECONDS);
 
     }
 
