@@ -34,6 +34,7 @@ public class Banks {
    */
   public static void main(String[] args) throws Exception {
     Registry r = LocateRegistry.getRegistry(Configuration.RMI_PORT.get());
+
     // Thread pool to transfer money
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -57,8 +58,24 @@ public class Banks {
             }));
     }, 0, Configuration.TIMEOUT_PERIOD.get(), TimeUnit.MILLISECONDS);
 
-    Scanner scanner = new Scanner(System.in);
-    scanner.next();
+    Scanner input = new Scanner(System.in);
+
+    boolean readCommands = true;
+    while (readCommands) {
+      System.out.print(">>> ");
+      String command = input.nextLine().trim();
+      String[] commandParts = command.split("\\s+");
+      switch (commandParts[0].toLowerCase()) {
+        case "":
+          continue;
+        case "snapshot":
+          snapshot(r);
+
+      }
+    }
+  }
+
+  private static void snapshot(Registry r) {
     ExecutorService e = Executors.newFixedThreadPool(1);
     e.execute(() -> {
       try {
