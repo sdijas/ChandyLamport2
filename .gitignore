@@ -34,3 +34,4 @@ chandy-lamport-snapshot.iml
 report/*
 !report/document.pdf
 out
+log

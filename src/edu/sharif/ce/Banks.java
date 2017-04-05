@@ -16,6 +16,7 @@ import edu.sharif.ce.snapshot.config.Configuration;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 import edu.sharif.ce.snapshot.core.rmi.RMIInterface;
 import edu.sharif.ce.snapshot.util.RandomGenerator;
+import edu.sharif.ce.snapshot.util.Report;
 
 /**
  * The Banks.
@@ -25,6 +26,7 @@ public class Banks {
    * The constant time.
    */
   private static int time;
+  private static Registry r;
 
   /**
    * The entry point of application.
@@ -33,7 +35,7 @@ public class Banks {
    * @throws Exception the exception
    */
   public static void main(String[] args) throws Exception {
-    Registry r = LocateRegistry.getRegistry(Configuration.RMI_PORT.get());
+    r = LocateRegistry.getRegistry(Configuration.RMI_PORT.get());
 
     // Thread pool to transfer money
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -69,23 +71,29 @@ public class Banks {
         case "":
           continue;
         case "snapshot":
-          snapshot(r);
+          snapshot(commandParts);
 
       }
     }
   }
 
-  private static void snapshot(Registry r) {
-    ExecutorService e = Executors.newFixedThreadPool(1);
-    e.execute(() -> {
-      try {
-        RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer0");
-        bankServerRemote.receiveToken(0, 0);
-      } catch (RemoteException e1) {
-        System.err.println("Failed to receive token from remote");
-      } catch (NotBoundException e1) {
-        System.err.println("Couldn't find remote bank");
-      }
-    });
+  private static void snapshot(String[] args) {
+    if (args.length == 2) {
+      ExecutorService e = Executors.newFixedThreadPool(1);
+      e.execute(() -> {
+        try {
+          Report.write("snapshot bank" + args[1] + " at time:" + time);
+          int bankId = Integer.parseInt(args[1]);
+          RMIInterface bankServerRemote = (RMIInterface) r.lookup("localhost/BankServer" + bankId);
+          bankServerRemote.receiveToken(bankId, bankId);
+        } catch (RemoteException e1) {
+          System.err.println("Failed to receive token from remote");
+        } catch (NotBoundException e1) {
+          System.err.println("Couldn't find remote bank");
+        }
+      });
+
+    }
+
   }
 }

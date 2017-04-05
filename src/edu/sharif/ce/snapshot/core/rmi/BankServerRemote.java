@@ -13,6 +13,7 @@ import edu.sharif.ce.snapshot.core.model.dao.BankDaoImpl;
 import edu.sharif.ce.snapshot.core.model.entity.Bank;
 import edu.sharif.ce.snapshot.core.model.entity.Snapshot;
 import edu.sharif.ce.snapshot.util.RandomGenerator;
+import edu.sharif.ce.snapshot.util.Report;
 
 /**
  * Provides an access to remote bank via remote method invocation.
@@ -102,8 +103,10 @@ public class BankServerRemote extends UnicastRemoteObject implements RMIInterfac
           }));
       }
       snapshot.stopRecording(bankDao.getBank(receiverBankId));
-      if (!snapshot.isRecording())
+      if (!snapshot.isRecording()) {
+        Report.write(bankDao.getBank(senderBankId));
         bankDao.getBank(senderBankId).getSnapshot().stopSnapshot();
+      }
     } finally {
       tokenLock.unlock();
       depositLock.unlock();

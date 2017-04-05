@@ -64,7 +64,6 @@ public class Snapshot implements Serializable {
    * Stop snapshot.
    */
   public void stopSnapshot() {
-    System.out.println(this);
     this.balance = 0;
     this.moneyInTransit = 0;
     incomingChannels.clear();
