@@ -1,0 +1,30 @@
+snapshot bank2 at time:12
+Bank[Id(3),Snapshot[Balance(999969384), MoneyInTransit(5813)])]
+Bank[Id(1),Snapshot[Balance(999948661), MoneyInTransit(0)])]
+Bank[Id(0),Snapshot[Balance(1000065391), MoneyInTransit(0)])]
+Bank[Id(2),Snapshot[Balance(1000010751), MoneyInTransit(0)])]
+snapshot bank0 at time:15
+Bank[Id(3),Snapshot[Balance(1000027746), MoneyInTransit(0)])]
+Bank[Id(1),Snapshot[Balance(1000012038), MoneyInTransit(22530)])]
+Bank[Id(0),Snapshot[Balance(999873006), MoneyInTransit(0)])]
+Bank[Id(2),Snapshot[Balance(1000064680), MoneyInTransit(0)])]
+snapshot bank1 at time:4
+Bank[Id(0),Snapshot[Balance(1000015062), MoneyInTransit(0)])]
+Bank[Id(3),Snapshot[Balance(1000067019), MoneyInTransit(0)])]
+Bank[Id(1),Snapshot[Balance(999883409), MoneyInTransit(0)])]
+Bank[Id(2),Snapshot[Balance(1000034510), MoneyInTransit(0)])]
+snapshot bank3 at time:10
+Bank[Id(0),Snapshot[Balance(1000392332), MoneyInTransit(0)])]
+Bank[Id(1),Snapshot[Balance(1000177889), MoneyInTransit(0)])]
+Bank[Id(2),Snapshot[Balance(999816314), MoneyInTransit(0)])]
+Bank[Id(3),Snapshot[Balance(999613465), MoneyInTransit(0)])]
+snapshot bank2 at time:20
+Bank[Id(2),Snapshot[Balance(1000147157), MoneyInTransit(0)])]
+Bank[Id(3),Snapshot[Balance(999923601), MoneyInTransit(0)])]
+Bank[Id(1),Snapshot[Balance(1000106383), MoneyInTransit(63693)])]
+Bank[Id(0),Snapshot[Balance(999759166), MoneyInTransit(0)])]
+snapshot bank0 at time:100
+Bank[Id(2),Snapshot[Balance(999710880), MoneyInTransit(83095)])]
+Bank[Id(1),Snapshot[Balance(1000043295), MoneyInTransit(0)])]
+Bank[Id(0),Snapshot[Balance(1000124669), MoneyInTransit(20240)])]
+Bank[Id(3),Snapshot[Balance(1000017821), MoneyInTransit(0)])]

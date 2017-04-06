@@ -2,9 +2,8 @@ package edu.sharif.ce.snapshot.core.model.entity;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 /**
@@ -21,7 +20,7 @@ public class Snapshot implements Serializable {
   private int moneyInTransit;
 
   // Each banks in the system records its local state and the state of its incoming channels.
-  private Set<Integer> incomingChannels = new HashSet<>();
+  private ConcurrentSkipListSet<Integer> incomingChannels = new ConcurrentSkipListSet<>();
 
   /**
    * Gets balance.
